@@ -619,6 +619,115 @@ const array = [1,2,3];
 array[0] = 5;
 console.log(array); // [5,2,3]
 ```
+### 🔹 `splice` Method:
+- Allows us to **remove** elements from an array **in place**.
+- Takes **two arguments**:
+  1. **Starting index** (where removal begins).
+  2. **Number of elements** to remove.
+```javascript
+// Remove Elements Greater Than 5
+function greaterThanFive(array) {
+    for (let i = array.length - 1; i >= 0; i--) {
+        if (array[i] > 5) {
+            array.splice(i, 1);
+        }
+    }
+}
+```
+## Objects in JavaScript
+
+Objects are a **fundamental data structure** in JavaScript, allowing us to **store key-value pairs**.
+
+## 🔹 Object Syntax:
+An object is defined using **curly braces `{}`** and contains **key-value pairs**.
+
+### Example: Creating an Object
+```javascript
+const person = {
+    hairColor: 'brown',
+    toes: 10,
+    grumpy: true
+};
+//Retrieve Values
+console.log( person.toes ); // 10
+console.log( person['toes'] ); // 10
+// use the . property accessor operator or  use brackets [] just like with arrays!
+```
+### Enumerated Type?
+An enumerated type (or enum) is a way to give meaningful names to numbers.
+Instead of using raw numbers, we use descriptive labels.
+
+```javascript
+const card = {
+    suit: 1, //  we store a card's suit as a number, it is hard to understand:
+    value: 5
+};
+
+const CARD_SUITS = {
+    DIAMONDS: 0,
+    HEARTS: 1,
+    SPADES: 2,
+    CLUBS: 3
+};
+
+const card = {
+    suit: CARD_SUITS.HEARTS,
+    value: 5
+};
+//✔️ CARD_SUITS.HEARTS is still 1, but now it's understandable.
+```
+###  Array of Objects in JavaScript
+We can store **objects inside arrays** to manage structured data efficiently.
+
+```javascript
+//expo.js
+const team1 = {
+    name: "Mets",
+    wins: 86,
+    inPlayoffs: false,
+};
+const teams = [team1, team2, team3];
+for(let i = 0; i < teams.length; i++) {
+    console.log(teams[i].name); 
+}
+module.exports = team1; // Exporting team1
+// impo.js
+const team1 = require('./expo'); // Importing team1
+
+//object without a name property, this will log undefined.
+```
+### Find the Number of Keys
+ 1. Using `in` Operator - use the `in` operator to iterate over all properties:
+```javascript
+const object = { a: 1, b: 2, c: 3 };
+
+for (let key in object) {
+    console.log(key);
+}
+```
+ 2. Using Object.keys() -Returns an array of keys. and Object.values() -  Returns an array of values.
+```javascript
+const obj = { a: 1, b: 2, c: 3 };
+console.log(Object.keys(obj));   // ['a', 'b', 'c']
+console.log(Object.values(obj)); // [1, 2, 3]
+```
+### Editing  Object Properties
+
+```javascript
+const person = {
+    name: "James",
+    age: 22
+};
+
+person.name = "Sally";
+person["age"] = 30;
+```
+### Deleting  Object Properties
+```javascript
+delete person.name;
+console.log(person.name); // undefined
+```
+
 
 
 
