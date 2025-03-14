@@ -727,7 +727,18 @@ person["age"] = 30;
 delete person.name;
 console.log(person.name); // undefined
 ```
+### Logical Operators
+ help us concisely express complex conditions.
+OR - || Logical OR  evaluate to true if either (or both) of the inputs are true.
+AND - && operator for requiring both conditions to be true.
+NOT - perator for negating a condition.
+### **JavaScript Default Operator (`||`)**
 
+The **Logical OR (`||`)** operator is often called the **default operator** because it allows setting default values when a variable is **falsy**.
+```javascript
+console.log("" || "Something Else"); 
+// Output: "Something Else"
+const message = WELCOME_MESSAGE || "Hello there!";
 
 
 
