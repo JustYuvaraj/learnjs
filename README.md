@@ -446,6 +446,180 @@ while (true) {
     }
 }
 ```
+## String Manipulation
+
+Messages are stored in **strings**, and sometimes we need to manipulate them.
+### Looking up Characters
+- To access characters in a **string** using:
+
+1. The `.charAt()` method.
+2. Square brackets (`[]`).
+
+### Examples:
+
+```javascript
+console.log("Hello".charAt(1)); // e
+console.log("Hello"[1]);        // e
+```
+### Comparing Strings
+
+In JavaScript, strings can be compared using:
+
+1. **Strict equality (`===`)** – Checks for exact match, including case and whitespace.
+2. **Comparison operators (`<`, `>`)** – Determines lexicographical order.
+
+### Equality Comparison:
+
+```javascript
+console.log('a' === 'a');  // true
+console.log('a' === 'A');  // false (case-sensitive)
+console.log('a' === 'a '); // false (extra space)
+```
+### Character Casing
+
+To **ignore character casing** in strings, JavaScript provides two methods:
+
+- **`toLowerCase()`** – Converts all characters to lowercase.
+- **`toUpperCase()`** – Converts all characters to uppercase.
+
+```javascript
+console.log("Hello".toLowerCase()); // "hello"
+console.log("Hello".toUpperCase()); // "HELLO"
+```
+### String Length
+
+The **`length`** property allows us to determine the number of characters in a string.
+
+### Examples:
+
+```javascript
+console.log("a".length); // 1
+console.log("Hello".length); // 5
+```
+### IndexOf
+
+The **`indexOf`** method finds the first occurrence of a character or substring in a string.
+
+### Examples:
+
+```javascript
+console.log("Hello".indexOf("e")); // 1
+console.log("abca".indexOf("a")); // 0
+console.log("abc".indexOf("q")); // -1
+console.log("happy dog bark".indexOf("dog")); // 6
+```
+### Slicing Strings
+
+The **`slice`** method extracts a portion of a string and returns it as a new string.
+
+### Syntax:
+```javascript
+string.slice(startIndex, endIndex);
+console.log("The 40 Thieves".slice(4, 8)); // "40 T"
+//endIndex (optional): The position where slicing stops (not included in the result).
+```
+### Negative Arguments in `slice`
+
+We can use **negative values** in the `slice` method to extract characters starting **from the end** of the string.
+
+### Syntax:
+```javascript
+string.slice(-startIndex, -endIndex);
+console.log("the apple".slice(-5, -2)); // "app"
+//startIndex: Starts slicing from the end of the string.
+//endIndex (optional): Stops slicing from the end (not included in the result).
+```
+## Arrays in JavaScript
+
+Arrays are used to store **multiple elements** in a single variable. Instead of storing individual values separately, arrays allow efficient storage and manipulation of multiple items.
+
+## Declaring an Array
+An array is created using square brackets `[]` and values are separated by commas.
+- Easily store many elements.
+- Allow element retrieval using an index. arr[0]
+- Quickly provide the total length of the element arr.length
+- Just like strings, **arrays use zero-based indexing**. This means:
+- The **first element** is at **index `0`**.
+- The **second element** is at **index `1`** ..
+```javascript
+const scores = [70, 80, 65, 100, 90, 95];
+let total = 0; 
+for(let i = 0; i < array.length; i++) {
+    total += array[i];
+}
+```
+### Contains Element
+
+To check if an element exists in an array, use `indexOf`:
+
+```javascript
+const element = 3;
+const array = [1, 2, 3];
+const isContained = array.indexOf(element) >= 0;  //If indexOf returns -1, the element is not in the array.
+console.log(isContained); // true
+ // push method adds elements to the new array
+```
+### Returning a New Array
+
+To filter an array, create a new array and push elements that satisfy a condition:
+
+```javascript
+function greaterThanFive(array) {
+    const newArray = [];
+    for (let i = 0; i < array.length; i++) {
+        if (array[i] > 5) {
+            newArray.push(array[i]);
+        }
+    }
+    return newArray;
+}
+```
+### Reference in JavaScript
+
+### Primitive Values (Stored by Value)
+When storing a **primitive value** (like numbers, strings, or booleans), assigning it to another variable **copies the value**.
+
+### Example:
+```javascript
+let a = 3;
+let b = a;
+
+a = 10;
+
+console.log(a); // 10
+console.log(b); // 3
+```
+### Objects and Arrays (Stored by Reference)
+
+When storing an **object or array**, assigning it to another variable **copies the reference, not the value**.
+
+## Example:
+```javascript
+let a = [1,2,3];
+let b = a;
+
+a[0] = 5;
+
+console.log(a); // [5,2,3]
+console.log(b); // [5,2,3]
+
+const arr = [1, 2, 3];
+arr[0] = 10;  // ✅ Allowed
+
+arr = [4, 5, 6]; // ❌ Error: Assignment to constant variable no new reference
+```
+### Modifying Array Values
+
+- to **read** array values use square brackets such as `array[0]`.
+- to **write new values** to those positions using the **assignment operator `=`**.
+
+## Example:
+```javascript
+const array = [1,2,3];
+array[0] = 5;
+console.log(array); // [5,2,3]
+```
+
 
 
 
