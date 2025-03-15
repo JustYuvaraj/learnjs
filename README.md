@@ -975,5 +975,200 @@ console.log(typeof 1); // "number"
 console.log(typeof "1"); // "string"
 console.log(typeof {}); // "object"
 ```
+## **To String Conversion**
 
+### **Explicit Conversion**
+Using `.toString()` or `String()`:
+
+```js
+const a = 123;
+console.log(a.toString()); // "123"
+console.log(String(a)); // "123"
+
+console.log(false.toString()); // "false"
+```
+
+### **Implicit Conversion**
+Using `+ ""`:
+
+```js
+console.log(123 + ""); // "123"
+console.log(true + ""); // "true"
+```
+ auto converts values to strings when concatenating with an empty string.
+
+### **String Concatenation with Numbers**
+When a number is combined with a string, both are converted to strings:
+
+```js
+console.log(2 + "2"); // "22"
+```
+## **Logical NOT (`!`) & Double NOT (`!!`)**
+
+### **Single NOT (`!`)**
+Flips a boolean value:
+```js
+console.log(!3); // false
+console.log(!""); // true
+```
+
+### **Double NOT (`!!`) for Boolean Conversion**
+Converts any value to a boolean:
+```js
+console.log(!!3); // true
+console.log(!!""); // false
+```
+
+## **Boolean Conversion**
+
+### **Explicit Conversion**
+Using `Boolean()`:
+```js
+console.log(Boolean(2)); // true
+console.log(Boolean("")); // false
+```
+
+### **Truthy & Falsy Values**
+- **Falsy**: `false`, `0`, `""`, `null`, `undefined`, `NaN`
+- **Truthy**: Everything else
+
+### **Implicit Boolean Conversion**
+Used in conditionals:
+```js
+if (3) console.log('3 is truthy!');
+```
+## **Loose Equals (`==`) vs. Strict Equals (`===`)**
+
+### **Strict Equals (`===`)**
+Compares values **without** type conversion:
+```js
+console.log(3 === 3); // true
+console.log("apple" === "orange"); // false
+console.log("2" === 2); // false
+```
+
+### **Loose Equals (`==`)**
+Attempts **type conversion** before comparison:
+```js
+console.log("2" == 2); // true
+```
+## **JSON (JavaScript Object Notation)**
+
+### **1. What is JSON?**
+JSON is a **lightweight data format** used to store and exchange data between systems. It is based on **JavaScript object syntax** but exists as a **string**.
+
+### **2. JSON Syntax**
+- Data is stored as **key-value pairs**.
+- Keys must be **strings** and enclosed in **double quotes**.
+- Values can be **strings, numbers, objects, arrays, booleans, or null**.
+
+#### **Example JSON Data:**
+```json
+{
+  "name": "Jim",
+  "age": 25,
+  "isStudent": false
+}
+```
+
+### **3. Why Use JSON?**
+✅ **Standard Format** – Used universally for data exchange.
+✅ **Lightweight** – Minimal syntax for easy parsing.
+✅ **Readable** – Simple structure makes it human-readable.
+✅ **Compatible** – Works across different programming languages.
+
+### **4. Converting Data to JSON**
+To convert a JavaScript object to JSON format, use `JSON.stringify()`:
+```js
+const person = { name: "Jim", age: 25 };
+const jsonString = JSON.stringify(person);
+console.log(jsonString); // '{"name":"Jim","age":25}'
+```
+
+### **5. Converting JSON to JavaScript Object**
+To parse a JSON string back into a JavaScript object, use `JSON.parse()`:
+```js
+const jsonData = '{"name":"Jim","age":25}';
+const obj = JSON.parse(jsonData);
+console.log(obj.name); // Jim
+```
+ECMAScript is the specification that JavaScript follows.
+Recent editions add new features, like in ES2015 (e.g., arrow functions, classes).
+Older browsers may not support these features, so transpilers like Babel help convert the code to be compatible.
+### **Destructuring, Rest, and Spread in JavaScript**  
+
+#### **1. Destructuring**  
+Destructuring allows **unpacking** values from objects or arrays into variables.  
+
+#### 🔹 **Object Destructuring**  
+```js
+const obj = { a: 2, b: 3 };
+const { a, b } = obj;
+console.log(a); // 2
+console.log(b); // 3
+```
+- Values are assigned to variables with the **same property names**.  
+
+#### 🔹 **Array Destructuring**  
+```js
+const arr = ["hello", "world"];
+const [a, b] = arr;
+console.log(a); // "hello"
+console.log(b); // "world"
+```
+- Values are assigned based on their **position** in the array.  
+
+#### 🔹 **Destructuring in Function Arguments**  
+```js
+function addThree([a, b, c]) {
+    return a + b + c;
+}
+console.log(addThree([1, 2, 3])); // 6
+```
+- Function parameters can be **destructured directly**.  
+
+---
+
+### **2. Rest Parameters**  
+Rest parameters collect remaining **function arguments** into an array.  
+
+#### 🔹 **Basic Usage**  
+```js
+function log(...args) {
+    console.log(args);
+}
+log(1, 2, 3, 4, 5); // [1, 2, 3, 4, 5]
+```
+- `...args` gathers **all arguments** into an array.  
+
+#### 🔹 **Partial Rest Parameters**  
+```js
+function log(a, b, ...others) {
+    console.log(others);
+}
+log(1, 2, 3, 4, 5); // [3, 4, 5]
+```
+- First two arguments are assigned, **rest go into an array**.  
+
+#### 🔹 **Rest in Destructuring**  
+```js
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(others); // [3, 4, 5]
+```
+- Useful for **extracting remaining elements**.  
+
+---
+
+### **3. Spread Operator**  
+Spread expands **arrays or objects** into individual elements.  
+
+#### 🔹 **Using Spread in Functions**  
+```js
+const numbers = [1, 2, 3];
+function add(a, b, c) {
+  return a + b + c;
+}
+console.log(add(...numbers)); // 6
+```
+- Spreads the array into **separate arguments**.  
 
