@@ -731,7 +731,7 @@ console.log(person.name); // undefined
  help us concisely express complex conditions.
 OR - || Logical OR  evaluate to true if either (or both) of the inputs are true.
 AND - && operator for requiring both conditions to be true.
-NOT - perator for negating a condition.
+NOT - ! operator for negating a condition.
 ### **JavaScript Default Operator (`||`)**
 
 The **Logical OR (`||`)** operator is often called the **default operator** because it allows setting default values when a variable is **falsy**.
@@ -739,7 +739,130 @@ The **Logical OR (`||`)** operator is often called the **default operator** beca
 console.log("" || "Something Else"); 
 // Output: "Something Else"
 const message = WELCOME_MESSAGE || "Hello there!";
+```
+### `&&` (Logical AND) Operator
+Returns the first falsy value it finds.
+If all values are truthy, it returns the last truthy value
+The `&&` operator, also known as the **Logical AND operator** or the **guard operator**, is used to **return the first falsy value** or the **last truthy value**.
 
+- If **both operands are truthy**, it **returns the second operand**.
+- If **the first operand is falsy**, it **returns the first operand** without evaluating the second one.
 
+```javascript
+console.log(true && "Hello");   // "Hello" (both are truthy, returns second operand)
+console.log([] && "Array");     // "Array"
+
+console.log(false && "Hello");  // false (first operand is falsy, returns it)
+console.log(undefined && "Object"); // undefined
+```
+### Logical OR (`||`) Operator
+Returns the first truthy value it finds.
+If all values are falsy, it returns the last falsy value.
+- If the **first operand is truthy**, it **returns the first operand** and does **not** evaluate the second one (**short-circuiting**).
+- If the **first operand is falsy**, it evaluates the second operand and **returns it**.
+- 
+```javascript
+console.log(true || "Hello");   // true  (first operand is truthy)
+console.log({} || "Object");    // {}    (truthy, returns first operand)
+
+console.log(false || "Hello");  // "Hello" (false is falsy, returns second)
+console.log(undefined || "Object"); // "Object" (undefined is falsy, returns second)
+```
+###  Logical NOT (`!`) Operator
+
+The `!` (Logical NOT) operator is used to **negate** a boolean value, flipping `true` to `false` and vice versa.
+- `!true` → `false`
+- `!false` → `true`
+- **Truthy values** become `false`, and **falsy values** become `true`.
+- 
+```javascript
+console.log(!true);  // false
+console.log(!undefined); // true
+console.log(!null);      // true
+console.log(!NaN);       // true
+```
+## 🚀 Exceptions in Programming  
+
+### Exceptions
+An **exception** is an unexpected error in a function. If not handled, it is **thrown**, stopping execution and passing control back to the caller.
+The caller can **catch** it or let it **bubble up** the call stack. If uncaught, the program **crashes**.  
+
+### Handling Exceptions  
+Consider sending emails to users:  
+
+- `emailUsers` calls `sendEmail` for each user.  
+- If `sendEmail` fails, it **throws an error**.  
+- `emailUsers` **catches** and logs the error, continuing with other users.  
+Catching exceptions ensures the program **keeps running** despite errors.
+ 
+### Fatal Exceptions  
+Fatal errors are critical issues in a program that cannot be fixed during runtime, resulting in the program needing to stop. 
+- Fatal errors indicate a **critical failure**.  
+- Exceptions thrown from **lower functions** can be **handled at higher levels**.  
+- If uncaught, the program **terminates**.  
+# 🚀 Throwing Errors in JavaScript  
+
+###  Run-Time Error
+A **run-time error** occurs when JavaScript itself throws an error, stopping execution due to an unexpected issue.  
+
+### 🔹 Creating an Error  
+Errors in JavaScript can be created using the **`Error`** object:  
+```javascript
+- `const error1 = new Error("Something bad happened!");`  //Errors are usually created with **`new`** since it generates a **new instance** of the `Error` object
+- `const error2 = Error("Something bad happened!");`
+```
+
+### 🔹 Throwing an Error  
+Throwing an error **immediately stops execution** at that point.  
+We should **throw errors** in places where execution must stop due to an issue. Execution will **resume** only if the error is **caught** elsewhere.  
+```javascript
+const a = 3;
+
+if (a === 3) {
+    throw new Error("We don't want a to be 3");
+}
+```
+###  Catching Errors 
+
+### 🔹 What is Catching an Error?  
+Catching an error means **handling an exception** so that the program does not crash unexpectedly.  
+When an error is thrown, we can **catch it** and decide how to respond—either logging it, fixing it, or notifying the user.  
+
+### How to Catch Errors?  
+We use a `try...catch` block to handle errors **gracefully**.  
+
+### Syntax:  
+
+```js
+try {
+    readFile("book"); 
+}
+catch(ex) {
+    console.log(ex); // EISDIR: illegal operation , will only execute if an error (ex) is thrown by readFile.
+}
+```
+### 🔄 Catch & Return in JavaScript  
+
+### 🔹 What Happens When an Error is Thrown?  
+When an error is thrown:  
+1️⃣ Execution **stops immediately**.  
+2️⃣ The program **jumps** to the nearest `catch` block.  
+3️⃣ If not caught, the program **crashes**.  
+
+###🔹 Handling Errors with Return Values  
+
+Instead of letting errors crash the program, we can **catch them and return a value** to indicate success or failure.  
+
+```js
+function writeLogFile(id, contents) {
+    try {
+        writeFile(`logs/${id}`, contents); // Attempt to write a file
+    } 
+    catch (ex) {
+        return false; // Return false if an error occurs
+    }
+    return true; // Return true if successful
+}
+```
 
 
