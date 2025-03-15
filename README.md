@@ -864,5 +864,116 @@ function writeLogFile(id, contents) {
     return true; // Return true if successful
 }
 ```
+## Error Types
+
+Let's explore several different types of JavaScript run-time errors.
+
+### **Type Error**
+Occurs when a variable is not the expected type for an operation.
+
+```js
+const x = 3;
+x(); // Throws TypeError: x is not a function.
+
+let b;
+b.prop; // Throws TypeError: Cannot read property 'prop' of undefined
+```
+
+---
+
+### **Reference Error**
+Occurs when trying to access an undefined variable.
+
+```js
+z(); // Throws ReferenceError: z is not defined.
+```
+
+---
+
+### **Syntax Error**
+Occurs when the code has invalid JavaScript syntax.
+
+```js
+const a = 3;
+a.72; // Throws SyntaxError: Unexpected number.
+```
+If using a transpiler like Babel, this may fail at the compilation step.
+
+---
+
+### **Range Error**
+Occurs when a value is outside the allowed range.
+
+```js
+new Array(Infinity); // Throws RangeError: Invalid array length.
+```
+
+---
+
+## Type Conversion
+
+Type conversion changes a value’s type, either explicitly or implicitly.
+
+### **Explicit Conversion**
+Done intentionally using methods like `.toString()` or `Number()`.
+
+```js
+const a = (1).toString();
+console.log(a); // "1"
+console.log(typeof a); // string
+```
+
+### **Implicit Conversion**
+Happens automatically due to JavaScript's loose typing.
+
+```js
+const b = "3" + "4";
+console.log(b); // "34"
+console.log(typeof b); // string
+```
+JavaScript converts numbers to strings when using the `+` operator with strings.
+
+## **Strings to Numbers**
+
+### **Explicit Conversion**
+Using the `Number()` function:
+
+```js
+const string = "2";
+console.log(Number(string)); // 2
+
+const invalidString = "hello";
+console.log(Number(invalidString)); // NaN
+```
+
+### **Using parseInt and parseFloat**
+These methods convert numbers from strings but remove trailing non-numeric characters.
+
+```js
+console.log(parseInt("12px")); // 12
+console.log(parseFloat("12.34px")); // 12.34
+```
+
+### **Implicit Conversion**
+Using the `+` operator:
+
+```js
+const string = "2";
+console.log(+string); // 2
+
+const invalidString = "hello";
+console.log(+invalidString); // NaN  stands for "Not A Number", typeof NaN will evaluate to "number"
+```
+The `+` operator implicitly converts a string to a number, returning `NaN` if conversion fails.
+
+
+## **typeof Operator**
+The `typeof` operator checks a value’s type.
+
+```js
+console.log(typeof 1); // "number"
+console.log(typeof "1"); // "string"
+console.log(typeof {}); // "object"
+```
 
 
