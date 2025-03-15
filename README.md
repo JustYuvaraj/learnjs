@@ -1170,5 +1170,100 @@ function add(a, b, c) {
 }
 console.log(add(...numbers)); // 6
 ```
-- Spreads the array into **separate arguments**.  
+- Spreads the array into **separate arguments**.
+  
+## `this`**  
+`this` is a special keyword that refers to the context in which the current code is being executed. Its value depends on how a function is called.The **`this`** keyword refers to the **object** that is currently calling the function. 
+
+### **1️⃣ In the Global Scope**  
+**outside any function**, it refers to the global object:  
+- **In browsers →** `window`  
+- **In Node.js →** `globalThis`  
+
+```js
+console.log(this); // window (in browsers)
+```
+
+---
+
+### **2️⃣ Inside an Object Method**  
+When a function is inside an object, `this` refers to **that object**.  
+
+```js
+const user = {
+    name: "Alice",
+    greet() {
+        console.log(this.name); // "Alice"
+    }
+};
+
+user.greet(); // 'this' refers to 'user'
+```
+
+---
+
+### **3️⃣ Inside a Regular Function**  
+- **Without strict mode:** `this` refers to the **global object**.  
+- **With strict mode (`"use strict"`)**: `this` is **undefined**.  
+
+```js
+function show() {
+    console.log(this);
+}
+
+show(); // In browsers: window, In strict mode: undefined
+```
+
+---
+
+### **4️⃣ In a Constructor Function**  
+When using a **constructor function**, `this` refers to the **new object** being created.  
+
+```js
+function Person(name) {
+    this.name = name;
+}
+
+const person1 = new Person("John");
+console.log(person1.name); // "John"
+```
+### `calling function with a specific context:
+
+#### **Syntax of `call`**
+```javascript
+functionName.call(thisArg, arg1, arg2, ...);
+```
+- `thisArg` → The value of `this` inside the function.  
+- `arg1, arg2, ...` → Arguments passed individually.  
+
+```javascript
+function greet(greeting, punctuation) {
+    console.log(greeting + ", " + this.name + punctuation);
+}
+
+const person = { name: "Alice" };
+
+greet.call(person, "Hello", "!"); // → Pass arguments **individually**.  
+```
+
+---
+
+#### **Syntax of `apply`**
+```javascript
+functionName.apply(thisArg, [arg1, arg2, ...]);
+```
+- `thisArg` → The value of `this` inside the function.  
+- `[arg1, arg2, ...]` → Arguments passed as an array.  
+
+##### **Example:**
+```javascript
+function greet(greeting, punctuation) {
+    console.log(greeting + ", " + this.name + punctuation);
+}
+
+const person = { name: "Alice" };
+
+greet.apply(person, ["Hello", "!"]); // Output: Hello, Alice!
+```
+
 
