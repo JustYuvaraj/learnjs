@@ -1265,5 +1265,214 @@ const person = { name: "Alice" };
 
 greet.apply(person, ["Hello", "!"]); // Output: Hello, Alice!
 ```
+## Binding
 
+###  `bind()`
+The `bind()` method creates a new function with a specific `this` value, without modifying the original function.
+
+### Syntax
+```js
+function functionName() {
+    return this.property;
+}
+const boundFunction = functionName.bind(object);
+```
+
+```js
+function getName() {
+    return this.name;
+}
+const newFunction = getName.bind({ name: 'Ted' });
+console.log(newFunction()); // Ted
+console.log(getName()); // undefined
+```
+
+### Binding Cannot Be Overwritten
+Once bound, the `this` value remains unchanged:
+```js
+const newFunction2 = newFunction.bind({ name: 'Walt' });
+console.log(newFunction2()); // Ted
+```
+
+### Argument Binding
+You can also bind arguments:
+```js
+function greet(greeting) {
+    return `${greeting}, ${this.name}`;
+}
+const sayHello = greet.bind({ name: 'Alice' }, 'Hello');
+console.log(sayHello()); // Hello, Alice
+```
+## Implicit Binding in `this`
+The value of `this` depends on **how** a function is called. When calling a function as an **object's property**, `this` refers to that object.
+```js
+const obj = {
+    value: 2,
+    getValue: function() {
+        return this.value;
+    }
+};
+
+console.log(obj.getValue()); // 2
+```
+✅ Here, `this` is implicitly bound to `obj`, so `this.value` is `2`.
+
+## Losing Implicit Binding
+If we **store the function reference** separately and call it, `this` is lost:
+
+### Example:
+```js
+const fn = obj.getValue;
+console.log(fn()); // undefined
+```
+❌ `this` is no longer bound to `obj`. It refers to the **global scope** instead.
+
+### Why?
+The function `getValue` is stored in `fn` without its original context, so `this` defaults to the global object (or `undefined` in strict mode).
+
+#### **Call-Site in JavaScript**  
+
+The **call-site** is **where a function is called** in the code, not where it is defined. The value of `this` in a function depends on **how** and **where** the function is called.  
+
+#### **Example 1: Calling a method inside an object**  
+```js
+const obj = {
+    value: 10,
+    getValue: function() {
+        return this.value;
+    }
+};
+
+console.log(obj.getValue()); // 10
+```
+✅ **Call-site**: `obj.getValue()` → `this` refers to `obj`.  
+
+### Assigning a function to a variable**  
+```js
+const fn = obj.getValue;
+console.log(fn()); // undefined
+```
+❌ **Call-site**: `fn()` → `this` refers to the global object (or `undefined` in strict mode).  
+
+### **Key Rule**  
+- The value of `this` depends on **how** a function is called, not where it was defined.
+
+
+## Unbound Function
+
+In JavaScript, functions inside other functions can lose their context (`this`). This issue is common in **asynchronous programming**, where functions execute later (e.g., network calls, animations, user interactions).
+
+### Issue Example
+```js
+const YEAR = 1000 * 60 * 60 * 24 * 365;
+
+function addYear() {
+    setTimeout(function() {
+        this.age++;
+    }, YEAR);
+}
+
+const person = { name: 'Fred', age: 29 };
+
+addYear.call(person);
+```
+**Problem:** When `setTimeout` executes, `this` refers to the global context, not `person`.
+
+---
+
+## Fixes for Context Issues
+### 1. **Using a Closure**
+Store `this` in a variable:
+```js
+function addYear() {
+    const that = this;
+    setTimeout(function() {
+        that.age++;
+    }, YEAR);
+}
+```
+This ensures `that` keeps the original `this` value.
+
+---
+### 2. **Using `.bind()`**
+Bind `this` to the function:
+```js
+function addYear() {
+    setTimeout(function() {
+        this.age++;
+    }.bind(this), YEAR);
+}
+```
+`.bind(this)` creates a new function with `this` permanently set.
+
+### 3. **Using Arrow Functions** *(Recommended)*
+Arrow functions **inherit `this`** from the surrounding function:
+```js
+function addYear() {
+    setTimeout(() => {
+        this.age++;
+    }, YEAR);
+}
+```
+# Prototypes in JavaScript
+
+## **Class Concept in Programming**
+- **Class:** A template for creating objects (instances).
+- **Instance:** An object with its own properties (**state**).
+- **Class Functions:** Copied into each new instance.
+
+## **JavaScript and Prototypes**
+- JavaScript **does not** have traditional classes.
+- Uses **prototypes** instead of copying functionality.
+- Objects are **linked** rather than **duplicated**.
+
+## **Key Differences**
+| Feature          | Classes             | Prototypes (JavaScript)    |
+|------------------|---------------------|-----------------------     |
+| Functionality    | Copied to instances | Shared via prototype chain |
+| Object Linking   | Independent objects | Objects linked together    |
+
+## **Prototype Mechanism**
+- Each object has an internal **prototype link**.
+- Forms a **prototype chain** for property/method lookup.
+- Searches the chain until found or reaches `null`.
+  
+## **Prototype Chain**
+- Every object in JavaScript has a **prototype**.
+- If a property/method is not found in an object, JavaScript looks up the **prototype chain**.
+- The chain ends at `Object.prototype`.
+
+### **Example**
+```js
+function Animal(name) {
+    this.name = name;
+}
+const animal = new Animal("Bud");
+```
+- `animal` inherits methods from `Object.prototype`.
+- These methods are **shared**, not duplicated.
+
+### **Proof of Shared Methods**
+```js
+const animal1 = new Animal("Bud");
+const animal2 = new Animal("Lassie");
+console.log(animal1.hasOwnProperty === animal2.hasOwnProperty); // true
+```
+- `hasOwnProperty` is found in `Object.prototype`, so both instances share it.
+
+## **Constructor Functions & `new`**
+- Functions like `Car` can act as constructors.
+- `new` creates a new object and binds `this`.
+
+### **Example**
+```js
+function Car(make, model) {
+    this.make = make;
+    this.model = model;
+}
+const car1 = new Car('Toyota', 'Camry');
+const car2 = new Car('Honda', 'Civic');
+console.log(car1.make); // Toyota
+console.log(car2.model); // Civic
+```
 
