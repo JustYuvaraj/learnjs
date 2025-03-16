@@ -2458,5 +2458,119 @@ class LinkedList {
         }
     }
 }
+```
+#  Node.js
+Node.js is a JavaScript runtime environment.
+It allows you to run JavaScript programs outside of a web browser.
+It provides the necessary tools and libraries to execute JavaScript on your local machine.
+Node.js uses the V8 JavaScript engine developed by Google.
+## Install Node.js
+1. Visit [nodejs.org](https://nodejs.org/).
+2. Download and run the installer for your OS.
+3. Verify installation by running the following in the terminal:
+   ```sh
+   node -v
+   ```
+
+## Run JavaScript with Node.js REPL
+- Open a terminal and type:
+  ```sh
+  node
+  ```
+- Run JavaScript commands.
+- Exit with:
+  ```sh
+  .exit
+  ```
+
+## Install a Text Editor
+- Recommended editors:
+  - [VS Code](https://code.visualstudio.com/)
+  - [Sublime Text](https://www.sublimetext.com/)
+
+## Run a JavaScript Script
+1. Create a file `index.js` in your editor.
+2. Add the following code:
+   ```js
+   const myName = "Dan";
+   const message = `Hello, ${myName}!`;
+   console.log(message);
+   ```
+3. Save the file and navigate to its location in the terminal.
+4. Run the script:
+   ```sh
+   node index.js
+   ```
+
+## Command Line Arguments
+1. Modify `index.js` to accept arguments:
+   ```js
+   const message = `Hello, ${process.argv[2]}!`;
+   console.log(message);
+   ```
+2. Run the script with an argument:
+   ```sh
+   node index.js Dan
+   ```
+# Node Package Manager (NPM)
+
+## Overview
+NPM (Node Package Manager) helps developers **manage and share packages** easily. It provides:
+- A **registry** of ready-to-use packages.
+- A **command-line tool** to install and manage dependencies.
+- **Versioning** to prevent breaking changes.
+
+## Getting Started
+### **Initialize a New Project**
+1. Create a new project folder.
+2. Run:
+   ```sh
+   npm init -y
+   ```
+   This creates a `package.json` file.
+
+## Installing Packages
+To install **faker-js**, run:
+```sh
+npm i @faker-js/faker
+```
+This adds a `dependencies` section in `package.json`:
+```json
+{
+  "dependencies": {
+    "@faker-js/faker": "^8.3.1"
+  }
+}
+```
+
+## Using a Package
+Create `index.js` and add:
+```js
+const { faker } = require("@faker-js/faker");
+console.log(`Hello, ${faker.person.fullName()}!`);
+```
+Run the script:
+```sh
+node index.js
+```
+
+## Understanding Versioning (SemVer)
+NPM follows **Semantic Versioning (SemVer)**:
+```
+MAJOR.MINOR.PATCH (e.g., 2.3.5)
+```
+- **MAJOR (2.x.x)** → Breaking changes.
+- **MINOR (x.3.x)** → New features, backward-compatible.
+- **PATCH (x.x.5)** → Bug fixes, backward-compatible.
+
+### **Versioning Rules in package.json**
+| Syntax      | Allows Updates For |
+|------------|-------------------|
+| `*` or `x` | Any version (not recommended). |
+| `^1.0.0`   | Minor & patch updates (`1.1.0`, `1.2.5`). |
+| `~1.0.0`   | Patch updates only (`1.0.1`, `1.0.9`). |
+
+
+
 
 
