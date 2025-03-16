@@ -2404,5 +2404,59 @@ Removing `Node2`:
 Node1 -> Node3  (Node2 is skipped)
 ```
 
+### Understanding the Head Node
+- The **head** is the first node in the linked list.
+- Each node contains a reference to the next node.
+- The last node's `next` reference is `null`, marking the end of the list.
+
+### Linked List Constructor
+Create a constructor function for `LinkedList`.
+- It should initialize a `head` property set to `null` by default.
+
+### Example
+```js
+const linkedList = new LinkedList();
+console.log(linkedList.head); // null
+```
+## Add First to Linked List
+
+### Problem Statement
+We need to implement a method **addFirst** in a **LinkedList** class. This method should add a new node to the **front** of the linked list, making it the new **head**.
+
+### Implementation Breakdown
+#### **Case 1: No Existing Head Node**
+If the linked list is empty (**head is null**), the new node simply becomes the **head**.
+
+#### **Case 2: Existing Head Node**
+If there is already a head node:
+1. Set the **next** of the new node to the current **head**.
+2. Update the **head** of the linked list to the new node.
+
+### Solution Code
+```js
+class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+class LinkedList {
+    constructor() {
+        this.head = null;
+    }
+
+    addFirst(node) {
+        if (this.head === null) {
+            // No existing head node, set the new node as the head
+            this.head = node;
+        } else {
+            // Set the new node's next to current head
+            node.next = this.head;
+            // Update the head to the new node
+            this.head = node;
+        }
+    }
+}
 
 
