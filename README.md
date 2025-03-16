@@ -1463,8 +1463,6 @@ console.log(animal1.hasOwnProperty === animal2.hasOwnProperty); // true
 ## **Constructor Functions & `new`**
 - Functions like `Car` can act as constructors.
 - `new` creates a new object and binds `this`.
-
-### **Example**
 ```js
 function Car(make, model) {
     this.make = make;
@@ -1475,4 +1473,90 @@ const car2 = new Car('Honda', 'Civic');
 console.log(car1.make); // Toyota
 console.log(car2.model); // Civic
 ```
+## ** Prototype and Methods**
+
+## **1️⃣ Understanding Prototypes**
+- Prototypes allow objects to inherit methods from a shared prototype object.
+- Adding a method to `Shape.prototype` ensures all instances can access it without duplication.
+
+## **2️⃣ Creating the `Shape` Constructor**
+```javascript
+function Shape(x, y) {
+    this.position = { x, y };
+}
+```
+- Initializes an object with `position.x` and `position.y`.
+
+## **3️⃣ Adding Methods to the Prototype**
+```javascript
+Shape.prototype.move = function(x, y) {
+    this.position.x += x;
+    this.position.y += y;
+};
+```
+- `move` updates `position` and is shared across all instances.
+
+## **4️⃣ Example Usage**
+```javascript
+const shape = new Shape(0, 0);
+console.log(shape.position); // { x: 0, y: 0 }
+
+shape.move(5, 10);
+console.log(shape.position); // { x: 5, y: 10 }
+```
+
+## **5️⃣ Prototype Chain Lookup**
+- JavaScript first **searches for `move`** on the instance (`shape`).
+- If not found, it checks `Shape.prototype`.
+- If still not found, it looks at `Object.prototype`.
+- Since `move` exists in `Shape.prototype`, it is executed from there.
+
+## **6️⃣ Avoid Arrow Functions for Prototypes**
+🚨 **Do NOT use arrow functions for prototype methods:**
+```javascript
+Shape.prototype.move = (x, y) => {
+    this.position.x += x;
+    this.position.y += y;
+};
+```
+❌ **Wrong!** Arrow functions do not bind `this` to the instance.
+✅ **Use regular functions** to maintain correct `this` binding.
+
+# **`Object.create` in JavaScript**
+
+## **1️⃣ What is `Object.create`?**
+- Creates a new object with a specified prototype.
+- Links objects via the prototype chain.
+
+## **2️⃣ Example: Linking Objects**
+```javascript
+const car = { make: 'Toyota', model: 'Camry' };
+const camry = Object.create(car);
+
+console.log(camry.make); // Toyota
+console.log(camry.model); // Camry
+```
+✅ `camry` inherits properties from `car`.
+
+## **3️⃣ Prototype Chain Behavior**
+```javascript
+car.make = "Not Toyota";
+console.log(camry.make); // Not Toyota
+```
+✅ `camry` reflects changes in `car` because it’s linked, not copied.
+
+## **4️⃣ Using `Object.create` for Inheritance**
+```javascript
+function Shape(x, y) { this.position = { x, y }; }
+function Circle(x, y, radius) {
+    Shape.call(this, x, y);
+    this.radius = radius;
+}
+Circle.prototype = Object.create(Shape.prototype);
+```
+✅ `Circle` now inherits from `Shape`.
+
+
+
+
 
