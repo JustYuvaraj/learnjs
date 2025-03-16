@@ -2082,6 +2082,132 @@ const letters = ['a', 'b', 'c', 'd', 'e'];
 const evenIndexLetters = letters.filter((el, i) => i % 2 === 0);
 console.log(evenIndexLetters); // ['a', 'c', 'e']
 ```
+# Array Reduce
 
+## What is Reduce?
+`reduce()` is used to process an array and return a **single value**. It works by accumulating values from the array through an iterative process.
 
+### Example: Sum of Numbers
+For `[1,2,4]`, using `reduce()` to sum all elements:
 
+```js
+const sum = [1, 2, 4].reduce((acc, curr) => acc + curr);
+console.log(sum); // 7
+```
+
+### How it Works:
+- **First Iteration**:  
+  - `acc = 1` (default first value)  
+  - `curr = 2`  
+  - `acc + curr = 3`  
+
+- **Second Iteration**:  
+  - `acc = 3` (previous result)  
+  - `curr = 4`  
+  - `acc + curr = 7`  
+
+- Final result: **7**
+
+### Default Accumulator
+By default, `reduce()` uses the **first element** as the initial accumulator. However, we can **explicitly** provide an initial value:
+
+```js
+const sum = [1, 2, 4].reduce((acc, curr) => acc + curr, 0); //  This starts with `acc = 0`, 
+```
+**Finding the Largest Value with Reduce**
+
+To find the largest value in an array using `reduce`, compare elements and return the greater one.
+
+### Example:
+```js
+const numbers = [1, 4, 2, 5];
+const max = numbers.reduce((a, b) => (a > b ? a : b));
+console.log(max); // 5
+```
+### initial value of the accumulator.
+In reduce, the second argument serves as the initial value of the accumulator.
+```js
+const sum = [-1, -2, -4].reduce(function(acc, curr) {
+    return acc + curr;
+}, 1);
+console.log(sum); // Output: -6
+```
+
+### Ternary Operator (`? :`):
+- `(a > b ? a : b)` is a shorthand for:
+  ```js
+  if (a > b) return a; else return b;
+  
+  ```
+
+### Removing Duplicates with Reduce
+
+We can use `reduce` to remove duplicates from an array in JavaScript.
+
+#### **Code:**
+```js
+function removeDuplicates(numbers) {
+    return numbers.reduce((acc, num) => {
+        if (!acc.includes(num)) acc.push(num);
+        return acc;
+    }, []);
+}
+
+console.log(removeDuplicates([2,2,3,5,1,3,4])); // [2,3,5,1,4]
+```
+## Grouping With Reduce
+
+We can use `reduce` to **group** objects in an array by a specific property.
+
+### **Example Input:**
+```js
+const foods = [
+    { food: 'apple', type: 'fruit' },
+    { food: 'orange', type: 'fruit' },
+    { food: 'carrot', type: 'vegetable' }
+];
+```
+
+### **Desired Output:**
+```js
+{
+    fruit: ['apple', 'orange'],
+    vegetable: ['carrot']
+}
+```
+
+### **Implementation:**
+```js
+function group(foods) {
+    return foods.reduce((accumulator, currentValue) => {
+        accumulator[currentValue.type] = accumulator[currentValue.type] || [];
+        accumulator[currentValue.type].push(currentValue.food);
+        return accumulator;
+    }, {});
+}
+```
+## Recursion
+  recursion is when a function calls itself.
+ "if a function calls itself, when does it stop?".
+
+```js
+function go() {
+    go();
+}
+```
+This function `go` is recursive, but it doesn't know when to stop! It will keep running until we run out of memory or the JavaScript engine ends it.
+
+ **function's arguments change over time until they reach a certain point** `**base case**`.  determines  to exit the recursion. 
+```js
+function go(n) {
+    if(n === 0) {
+        // base case, exit recursion
+        return; // terminates the current call and all previous calls in the recursion stack
+    }
+    // change our argument
+    go(n - 1);
+}
+
+// call the function
+go(5);
+```
