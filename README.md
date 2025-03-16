@@ -2330,4 +2330,79 @@ const top = arr.pop();
 console.log(top); // 4
 console.log(arr); // [1,2,3]
 ```
+```
+const { MAX_STACK_SIZE } = require('./config');
+
+class Stack {
+    constructor() {
+        this.items = [];
+    }
+    push(item) {
+        if (this.items.length >= MAX_STACK_SIZE )
+            throw new Error("stack overflow")
+        this.items.push(item)
+…    
+        return this.items[this.items.length - 1]
+    }
+}
+
+module.exports = Stack;
+```
+
+```
+const Stack = require('./Stack');
+
+class OperationManager {
+    constructor() {
+        this.operations = new Stack()
+        this.undos  = new Stack()
+
+    }
+
+    addOperation(operation) {
+        this.operations.push(operation)
+    }
+
+    undo() {
+        this.undos.push(this.operations.pop())
+    }
+
+    redo() {
+        this.operations.push(this.undos.pop())
+    }
+
+    redoAll() {
+        if(this.undos.isEmpty() == false){
+             this.redo()
+             return this.redoAll()   
+        } 
+
+    }
+}
+
+module.exports = OperationManager;
+```
+## Linked Lists
+
+### What is a Linked List?
+A **linked list** is a data structure where each element (**node**) is connected to the next one through a reference (or pointer). It consists of:
+- **Data** (stores value)
+- **Next** (reference to the next node)
+
+### How It Works
+1. **Starting from the head**, follow the `next` pointer to traverse the list.
+2. **Insertion**: Add a new node by updating the `next` reference.
+3. **Deletion**: Remove a node by changing the `next` pointer of the previous node.
+
+### Example of Removing a Node
+Before deletion:
+```
+Node1 -> Node2 -> Node3
+```
+Removing `Node2`:
+```
+Node1 -> Node3  (Node2 is skipped)
+```
+
+
 
