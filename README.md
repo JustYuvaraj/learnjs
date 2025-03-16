@@ -1895,6 +1895,193 @@ To **ignore case differences**, use `{ sensitivity: 'base' }`:
 ```js
 console.log('Z'.localeCompare('a', undefined, { sensitivity: 'base' })); // 0 (case ignored)
 ```
+## map
+
+The **map** method in JavaScript allows us to apply a function to each element of an array and return a new array with the transformed elements.
+
+### Example:
+
+Let's define a function that adds one to a number:
+
+```js
+function addOne(x) {
+    return x + 1;
+}
+```
+
+Applying this function to an array using `map`:
+
+```js
+const arr = [3, 4, 5];
+
+const newArr = arr.map(function(x) {
+    return x + 1;
+});
+
+console.log(newArr); // [4, 5, 6]
+```
+
+### Explanation:
+- **map** iterates through each element in the array.
+- The function inside `map` is applied to each element.
+- A new array is returned with the transformed values.
+
+## Mapping a Function
+
+In JavaScript, the `map()` method allows applying a function to each element of an array and returning a new array with the results.
+
+```js
+const arr = [3, 4, 5];
+const newArr = arr.map(x => x + 1);
+console.log(newArr); // [4, 5, 6]
+```
+
+### Using Named Functions
+Instead of anonymous functions, we can use named functions:
+
+```js
+function addOne(x) {
+    return x + 1;
+}
+const result = [1, 2, 3].map(addOne);
+console.log(result); // [2, 3, 4]
+```
+
+### Using Built-in Functions
+
+```js
+const absolutes = [-1, 1, -2, 2].map(Math.abs);
+console.log(absolutes); // [1, 1, 2, 2]
+```
+
+## Extra Arguments in `map()`
+The callback function in `map()` receives **three arguments**:
+1. **Element (`el`)** – The current value being processed.
+2. **Index (`i`)** – The position of the element in the array.
+3. **Array (`arr`)** – The entire array itself.
+
+Example:
+
+```js
+[10, 20].map((el, i, arr) => {
+    console.log(el, i, arr);
+});
+```
+
+**Console Output:**
+```
+10 0 [10, 20]
+20 1 [10, 20]
+```
+
+## Unexpected Behavior with Extra Arguments
+Consider this function:
+
+```js
+function sayHello(name, greeting = "Hello") {
+    return `${greeting} ${name}!`;
+}
+```
+
+Using `map()` without an anonymous function:
+
+```js
+const result = ['Steve', 'Amanda'].map(sayHello);
+console.log(result); // ["0 Steve!", "1 Amanda!"]
+`//becoz index is being passed to sayHello as the second argument. to use the default greeting we need to explicitly only send one argument:
+sayHello('Steve', 0) → "0 Steve!"
+sayHello('Amanda', 1) → "1 Amanda!"
+//only pass one argument (name) manually:
+
+const result = ['Steve', 'Amanda'].map(name => sayHello(name));
+console.log(result); // ["Hello Steve!", "Hello Amanda!"]
+```
+
+### Mapping Over Objects
+
+The `map` method is not limited to arrays of numbers. It also works with objects, allowing you to transform them while keeping the original array unchanged.
+
+#### Example:
+
+```js
+const users = [
+    { name: 'Corey', loggedIn: true },
+    { name: 'Anna', loggedIn: false }
+];
+
+const loggedOutUsers = users.map(user => ({
+    name: user.name,
+    loggedIn: false
+}));
+
+console.log(loggedOutUsers);
+/*
+[
+    { name: 'Corey', loggedIn: false },
+    { name: 'Anna', loggedIn: false }
+]
+*/
+```
+### Array Map Index
+
+When using `map`, the callback function receives the **index** of each element as the second parameter.
+
+#### Example:
+```js
+[10, 20, 30].map((el, i) => {
+    console.log(i);
+});
+```
+### Array Filtering
+
+The `filter` method is used to **select elements** from an array based on a **boolean condition**.
+
+#### Example: Filtering Values
+To keep only elements equal to `1`:
+```js
+const ones = [1, 2, 3, 1, 1].filter(el => el === 1); 
+console.log(ones); 
+// **checks each element** callback` returns `true` to **keep** an element, `false` to **remove** it.
+```
+## Filtering Objects
+
+We can filter objects just like we filter numbers, booleans, and strings!
+
+```javascript
+const teams = [
+    { name: 'Mets', wins: 86 },
+    { name: 'Braves', wins: 97 },
+    { name: 'Dodgers', wins: 106 }
+];
+```
+
+If we want to select teams with fewer than 100 wins, we can use `filter`:
+
+```javascript
+const lessThan100 = teams.filter(team => team.wins < 100);
+```
+## Filtering By Index
+
+When supplying a function to `filter`, the first argument is the element, and the second argument is the position of that element (a zero-based index).
+
+### Example:
+```javascript
+['a', 'b', 'c'].filter(function(el, i) {
+    console.log(el, i);
+});
+```
+1. First Iteration: logs `a, 0`
+2. Second Iteration: logs `b, 1`
+3. Third Iteration: logs `c, 2`
+
+ index starts at `0` and increments by `1` each iteration.
+
+### Practical Example: Keeping Elements at Even Indices
+```javascript
+const letters = ['a', 'b', 'c', 'd', 'e'];
+const evenIndexLetters = letters.filter((el, i) => i % 2 === 0);
+console.log(evenIndexLetters); // ['a', 'c', 'e']
+```
 
 
 
