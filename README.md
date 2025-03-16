@@ -1556,7 +1556,345 @@ Circle.prototype = Object.create(Shape.prototype);
 ```
 ✅ `Circle` now inherits from `Shape`.
 
+##  Classes
 
+### What are Classes?
+- A structured way to create objects in JavaScript.
+- Introduced in ES2015, using prototypes behind the scenes.
+
+### Class Syntax
+- Defined using the `class` keyword followed by a name and `{}`.
+- Contains methods, including a special `constructor` method.
+
+```javascript
+class Hello {
+    constructor() {
+        console.log('hello!');
+    }
+}
+
+const h1 = new Hello(); // hello!
+const h2 = new Hello(); // hello!
+```
+- `constructor()` runs once per instance creation.
+- `h1` and `h2` are instances of `Hello`.
+
+### Initializing Properties in a Constructor
+- The `constructor` initializes properties on an instance using `this`.
+
+```javascript
+class Team {
+    constructor() {
+        this.sport = "soccer";
+    } 
+}
+
+const t1 = new Team();
+console.log(t1.sport); // soccer
+```
+- `sport` is an instance property initialized to "soccer".
+
+###  Instances
+- Instances are objects created from a class.
+- They borrow properties and methods from the class template.
+
+### Creating Instances
+- Use the `new` keyword to create an instance of a class.
+
+```javascript
+class Team {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+const team1 = new Team("Giants");
+const team2 = new Team("Jets");
+```
+- `team1` and `team2` are both instances of `Team`.
+- Each instance has its own `name` property.
+
+### How `this` Works in Instances
+- The `this` keyword refers to the specific instance being created.
+- For `team1`, `this` refers to `team1`, and for `team2`, it refers to `team2`.
+
+```javascript
+console.log(team1.name); // "Giants"
+console.log(team2.name); // "Jets"
+```
+- `team1.name` stores "Giants".
+- `team2.name` stores "Jets".
+  ```
+## Class Methods
+
+### What are Methods?
+- Functions inside a class that define behavior for instances.
+
+### Defining a Method
+```javascript
+class Team {
+    constructor() {
+        this.wins = 0;
+        this.losses = 0;
+    }
+    changeRecord(isWin) {
+        isWin ? this.wins++ : this.losses++;
+    }
+}
+```
+##  Subclasses
+
+### What are Subclasses?
+- Subclasses **inherit** properties and methods from a parent class.
+- Use the `extends` keyword to create a subclass.
+
+### Creating a Subclass
+```javascript
+class Shape {
+    constructor() {
+        this.position = { x: 0, y: 0 };
+    }
+}
+
+class Rectangle extends Shape {}
+```
+- `Rectangle` extends `Shape`, inheriting its properties.
+- 
+### Accessing Inherited Properties
+```javascript
+const rect = new Rectangle();
+console.log(rect.position.x); // 0
+console.log(rect.position.y); // 0
+```
+
+## `super` keyword**
+
+### **Extending a Class**
+When a subclass extends a parent class, it can use `super` to invoke the parent's constructor.
+
+```javascript
+class Shape {
+    constructor() {
+        this.position = { x: 0, y: 0 };
+    }
+}
+
+class Rectangle extends Shape {
+    constructor() {
+        super(); // calls the constructor of Shape. Note super() must be called in a subclass before using this  else ReferenceError.
+        this.height = 10; // only After calling `super()`, a subclass can define its own properties.
+        this.width = 5;
+    }
+}
+```
+- `Rectangle` now inherits `position` from `Shape`.
+
+### **Accessing Properties from Parent Class**
+```javascript
+const rectangle = new Rectangle();
+console.log(rectangle.position.x); // 0
+console.log(rectangle.height); // 10
+console.log(rectangle.width); // 5
+```
+## Calling Super Methods
+
+### Parent and Child Class Relationship
+- The **parent class** is the class being extended.
+- The **child class** is the class extending another class.
+- `super` allows the child class to call methods from the parent class.
+
+### Example: Calling a Parent Method
+```javascript
+class Potion {
+    constructor() {
+        this.empty = false;
+    }
+    
+    drink() {
+        this.empty = true;
+    }
+}
+
+class NoisyPotion extends Potion {
+    drink() {
+        super.drink();
+        console.log("LOUD NOISES!");
+    }
+}
+
+const potion = new NoisyPotion();
+potion.drink();  //  LOUD NOISES!
+```
+## Binary
+
+Binary is a **number system** using only **0** and **1** as symbols. It is the foundation of computer systems. Humans commonly use **decimal**, which has **10 symbols (0-9)**.
+
+### Representing Values
+- **Decimal (Base 10):** Each digit can be **0-9**.
+- **Binary (Base 2):** Each digit can be **0 or 1**.
+
+### Multiple Characters Representation
+#### Decimal
+- **1 digit:** 10 values (0-9)
+- **2 digits:** 100 values (00-99)
+- **3 digits:** 1000 values (000-999)
+- Formula: **10^n** (where n = number of characters)
+
+#### Binary
+- **1 bit:** 2 values (0,1)
+- **2 bits:** 4 values (00,01,10,11)
+- **3 bits:** 8 values (000-111)
+- Formula: **2^n**
+
+### Counting in Binary
+Same rules as decimal counting:
+- **Decimal:** 0, 1, 2, 3, ..., 8, 9, 10, 11, 12...
+- **Binary:** 0, 1, 10, 11, 100, 101, 110, 111, 1000...
+
+Binary is used in computers because **electric signals** are read as **0 (no current) or 1 (current)**.
+
+### Bits, Nibbles, and Bytes
+- **Bit:** Single binary digit (0 or 1)
+- **Nibble:** 4 bits (e.g., 1011)
+- **Byte:** 8 bits (e.g., 10001100)
+- **256 values (2^8)** can be represented with **1 byte**.
+- Example range: **0-255** or **-128 to 127** (for signed representation).
+
+### Binary Magnitudes
+| Decimal   | Binary Equivalent  |
+|-----------|-------------------|
+| **1,000** (thousand) | **1024** (kilobit/kibibit) |
+| **1,000,000** (million) | **1024^2** (megabit/mebibit) |
+| **1,000,000,000** (billion) | **1024^3** (gigabit/gibibit) |
+
+#### Bytes
+| Decimal (SI) | Binary Equivalent |
+|-------------|------------------|
+| **1 KB (kilobyte)** = 1000 bytes | **1 KiB (kibibyte)** = 1024 bytes |
+| **1 MB (megabyte)** = 1,000,000 bytes | **1 MiB (mebibyte)** = 1,048,576 bytes |
+| **1 GB (gigabyte)** = 1,000,000,000 bytes | **1 GiB (gibibyte)** = 1,073,741,824 bytes |
+
+## Hexadecimal
+
+Hexadecimal is commonly used to represent raw data due to its **easy conversion to and from binary**.
+
+### **16 Symbols**
+- Hexadecimal uses **16 symbols**: `0-9` and `a-f`.
+- The decimal equivalents for `a-f` are **10-15**.
+- Hex characters are **case-insensitive** (`A` or `a` can be used interchangeably).
+
+### **0x Prefix**
+- Hexadecimal numbers are typically **denoted with the prefix** `0x`.
+- Example: `0x4fd979de3edf0f56aa9716b898ec8`.
+- The `0x` prefix indicates the **following characters are in hexadecimal**.
+
+## **Converting Hexadecimal to Binary**
+- Each **hexadecimal character represents four binary digits** (a **nibble**).
+
+### **Mapping Table**
+| HEX | BINARY  |
+|-----|--------|
+| 0   | 0000   |
+| 1   | 0001   |
+| 2   | 0010   |
+| ... | ...    |
+| e   | 1110   |
+| f   | 1111   |
+
+#### **Binary to Hexadecimal**
+Binary: `11110100110110010111`
+
+Step-by-step grouping into nibbles:
+```
+1111 0100 1101 1001 0111
+F    4    D    9    7
+```
+Thus, `11110100110110010111` in binary is **`0xF4D97` in hexadecimal**.
+
+#### **Hexadecimal to Binary**
+Hexadecimal: `0x1C3AF`
+
+Step-by-step conversion:
+```
+1    C    3    A    F
+0001 1100 0011 1010 1111
+```
+Thus, `0x1C3AF` is **`00011100001110101111` in binary**.
+
+## Array Sort
+
+### Sorting in JavaScript
+JavaScript arrays have a built-in `sort()` method that sorts elements **in place**. It takes an **optional comparison function** to define custom sorting logic.
+
+### Default Sorting Behavior
+Without a comparison function, `sort()` converts elements to **strings** and sorts them lexicographically:
+```js
+const result = [20, 1, 2, 3].sort();
+console.log(result); // [1, 2, 20, 3]
+```
+**Issue:** Since numbers are treated as strings, "20" comes before "3" because "2" is less than "3".
+
+### Custom Sorting with Comparison Function
+To correctly sort numbers, pass a comparison function:
+```js
+[3, 2, 4, 1].sort(function(a, b) {
+    return a - b; // Ascending order
+});
+```
+### How the Comparison Function Works
+- If **`a - b`** is **negative**, `a` comes **before** `b`.
+- If **`a - b`** is **positive**, `b` comes **before** `a`.
+- If **`a - b`** is **zero**, order remains unchanged.
+
+### Sorting in Descending Order
+```js
+[3, 2, 4, 1].sort((a, b) => b - a);
+```
+
+### **String Comparison **  
+
+JavaScript provides the **`localeCompare()`** method to compare strings based on **alphabetical order, case sensitivity, and locale settings**.  
+
+---
+
+### **How `localeCompare()` Works**
+The method returns:  
+✅ `0` → if both strings are equal  
+✅ `-1` → if the first string comes **before** the second  
+✅ `1` → if the first string comes **after** the second  
+
+```js
+console.log('a'.localeCompare('a')); // 0 (both are equal)
+console.log('a'.localeCompare('b')); // -1 ('a' comes before 'b')
+console.log("apple".localeCompare("abcd")); // 1 ('apple' comes after 'abcd')
+```
+
+---
+
+### **Sorting Strings with `localeCompare()`**
+Since `localeCompare()` returns numerical values, we can use it for **sorting arrays alphabetically**:
+
+```js
+const words = ["banana", "apple", "cherry"];
+words.sort((a, b) => a.localeCompare(b));
+
+console.log(words); // ["apple", "banana", "cherry"]
+```
+
+---
+
+### **Handling Case Sensitivity & Accents**
+By default, `localeCompare()` is **case-sensitive**:
+
+```js
+console.log('Z'.localeCompare('a')); // -1 ('Z' comes before 'a')
+```
+
+To **ignore case differences**, use `{ sensitivity: 'base' }`:
+
+```js
+console.log('Z'.localeCompare('a', undefined, { sensitivity: 'base' })); // 0 (case ignored)
+```
 
 
 
