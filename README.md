@@ -2211,3 +2211,123 @@ function go(n) {
 // call the function
 go(5);
 ```
+## Call Stack
+
+### What is a Call Stack?
+The **call stack** is a data structure in JavaScript that keeps track of function calls.that keeps track of where the program has been so it knows where to return to! It follows the **Last In, First Out (LIFO)** principle, meaning the last function added is the first one removed. 
+
+### How It Works
+1. When a function is **called**, it is added to the **top** of the stack.
+2. If that function calls another function, the new function is **pushed** onto the stack.
+3. When a function **completes**, it is **removed (popped)** from the stack, and execution resumes from where it left off.
+4. This process continues until the stack is empty.
+
+### Recursion and the Call Stack
+```js
+function countdown(n) {
+    if (n === 0) return;
+    countdown(n - 1);
+}
+```
+Calling `countdown(5)` adds multiple function calls to the stack:
+```
+countdown(5);
+    countdown(4);
+        countdown(3);
+            countdown(2);
+                countdown(1); // Functions finish in reverse order
+```
+Without a base case, recursion keeps running and causes a **stack overflow**:
+
+**Error:** `Maximum call stack size exceeded!`
+
+### Factorial Function and Call Stack Breakdown
+```js
+function factorial(n) {
+    if (n == 1)
+        return 1;
+    return n * factorial(n - 1);    
+}
+```
+#### Calling `factorial(5)`
+1. `factorial(5)` is added to the stack.
+2. `factorial(4)` is called inside `factorial(5)`, so it is pushed onto the stack.
+3. `factorial(3)`, `factorial(2)`, and `factorial(1)` follow in the same manner.
+4. When `factorial(1)` is reached, it **returns 1** and starts popping functions from the stack.
+5. `factorial(2)` computes `2 * 1 = 2` and is removed.
+6. `factorial(3)` computes `3 * 2 = 6` and is removed.
+7. `factorial(4)` computes `4 * 6 = 24` and is removed.
+8. `factorial(5)` computes `5 * 24 = 120` and is removed.
+9. Stack is now empty!
+
+#### Call Stack Flow for `factorial(5)`
+```
+factorial(5)
+    factorial(4)
+        factorial(3)
+            factorial(2)
+                factorial(1) // Returns 1
+```
+Functions return and are popped in reverse order:
+```
+                factorial(1) returns 1
+            factorial(2) returns 2 * 1 = 2
+        factorial(3) returns 3 * 2 = 6
+    factorial(4) returns 4 * 6 = 24
+factorial(5) returns 5 * 24 = 120
+```
+✅ **Stack is now empty!**
+
+### Stack?
+A **stack** is a **LIFO (Last-In-First-Out)** data structure, meaning the most recently added element is removed first.
+
+### **LIFO in Detail**
+- **Push** → Adds an element to the **top** of the stack.
+- **Pop** → Removes the **top** element from the stack.
+
+---
+
+### **Implementing Push & Pop**
+A simple **Stack** class:
+
+```js
+class Stack {
+    constructor() {
+        this.items = []; // Array to store stack elements
+    }
+    
+    push(item) {
+        this.items.push(item); // Add item to the top
+    }
+    
+    pop() {
+        return this.items.pop(); // Remove and return the top item
+    }
+}
+
+const stack = new Stack();
+stack.push(1);
+stack.push(2);
+stack.push(3);
+stack.push(4);
+
+console.log(stack.pop()); // 4
+console.log(stack.pop()); // 3
+```
+- Elements **pop in reverse order** (Last-In-First-Out).
+
+---
+
+### **Using JavaScript Array Methods**
+JavaScript provides **push()** and **pop()** methods that work similarly:
+
+```js
+const arr = [1, 2, 3];
+arr.push(4);
+console.log(arr); // [1,2,3,4]
+
+const top = arr.pop();
+console.log(top); // 4
+console.log(arr); // [1,2,3]
+```
+
