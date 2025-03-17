@@ -2571,6 +2571,22 @@ MAJOR.MINOR.PATCH (e.g., 2.3.5)
 | `~1.0.0`   | Patch updates only (`1.0.1`, `1.0.9`). |
 
 
+## Asynchronous JavaScript
+###  Callback Function
+
+in js functions are **first-class objects**, meaning they can be **stored, passed, and returned** like any other value.  
+A **callback function** is a function passed as an argument to another function and executed **at a specific time**.
+
+```javascript
+function simpleFunction(fn) {
+    // Invoke the callback function
+    fn();
+}
+
+simpleFunction(function callbackFunction() {
+    console.log('hi');
+});
+```
 
 
 
